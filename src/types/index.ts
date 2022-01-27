@@ -1,8 +1,15 @@
-enum filtersName {
+enum FiltersName {
   lowercase = 'lowercase',
   uppercase = 'uppercase',
   numbers = 'numbers',
   symbols = 'symbols'
 }
 
-export { filtersName };
+type FiltersType = {
+  [FiltersName.lowercase]: boolean;
+  [FiltersName.uppercase]: boolean;
+  [FiltersName.numbers]: boolean;
+  [FiltersName.symbols]: boolean;
+};
+
+export { FiltersName, FiltersType };

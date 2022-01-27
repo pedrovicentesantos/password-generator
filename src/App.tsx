@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { FiClipboard } from 'react-icons/fi';
 import { Container } from './components';
 import { Checkbox } from './components/Checkbox/Checkbox';
-import { filtersName } from './types';
+import { generatePassword } from './helpers/generatePassword';
+import { FiltersName, FiltersType } from './types';
 
 const defaultLength = 8;
 
@@ -10,14 +11,14 @@ const App: React.FC = () => {
   const [password, setPassword] = useState('longpasswordwithnumbersandletters');
 
   const [length, setLength] = useState(defaultLength);
-  const [filters, setFilters] = useState({
-    [filtersName.lowercase]: true,
-    [filtersName.uppercase]: true,
-    [filtersName.numbers]: true,
-    [filtersName.symbols]: false
+  const [filters, setFilters] = useState<FiltersType>({
+    [FiltersName.lowercase]: true,
+    [FiltersName.uppercase]: true,
+    [FiltersName.numbers]: true,
+    [FiltersName.symbols]: false
   });
 
-  const handleCheckboxChange = (name: filtersName) => {
+  const handleCheckboxChange = (name: FiltersName) => {
     setFilters({ ...filters, [name]: !filters[name] });
   };
 
@@ -27,6 +28,8 @@ const App: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const generatedPassword = generatePassword(length, filters);
+    setPassword(generatedPassword || '');
   };
 
   return (
@@ -50,27 +53,27 @@ const App: React.FC = () => {
           />
         </div>
         <Checkbox
-          name={filtersName.lowercase}
+          name={FiltersName.lowercase}
           label="Incluir letras minúsculas"
-          checked={filters[filtersName.lowercase]}
+          checked={filters[FiltersName.lowercase]}
           handleChange={handleCheckboxChange}
         />
         <Checkbox
-          name={filtersName.uppercase}
+          name={FiltersName.uppercase}
           label="Incluir letras maiúsculas"
-          checked={filters[filtersName.uppercase]}
+          checked={filters[FiltersName.uppercase]}
           handleChange={handleCheckboxChange}
         />
         <Checkbox
-          name={filtersName.numbers}
+          name={FiltersName.numbers}
           label="Incluir números"
-          checked={filters[filtersName.numbers]}
+          checked={filters[FiltersName.numbers]}
           handleChange={handleCheckboxChange}
         />
         <Checkbox
-          name={filtersName.symbols}
+          name={FiltersName.symbols}
           label="Incluir caracteres especiais"
-          checked={filters[filtersName.symbols]}
+          checked={filters[FiltersName.symbols]}
           handleChange={handleCheckboxChange}
         />
       </section>
