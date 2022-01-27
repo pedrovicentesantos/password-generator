@@ -26,6 +26,7 @@ const StyledContainer = styled.form`
     margin-bottom: 2rem;
 
     .icon {
+      cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -46,7 +47,6 @@ const StyledContainer = styled.form`
     margin-bottom: 1rem;
 
     input {
-      cursor: pointer;
       width: 70%;
       background: none;
       border: none;

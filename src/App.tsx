@@ -2,20 +2,20 @@ import { useState } from 'react';
 import { FiClipboard } from 'react-icons/fi';
 import { Container } from './components';
 import { Checkbox } from './components/Checkbox/Checkbox';
+import { copyTextToClipboard } from './helpers/copyToClipboard';
 import { generatePassword } from './helpers/generatePassword';
 import { FiltersName, FiltersType } from './types';
 
 const defaultLength = 8;
 
 const App: React.FC = () => {
-  const [password, setPassword] = useState('longpasswordwithnumbersandletters');
-
+  const [password, setPassword] = useState('');
   const [length, setLength] = useState(defaultLength);
   const [filters, setFilters] = useState<FiltersType>({
     [FiltersName.lowercase]: true,
     [FiltersName.uppercase]: true,
     [FiltersName.numbers]: true,
-    [FiltersName.symbols]: false
+    [FiltersName.symbols]: true
   });
 
   const handleCheckboxChange = (name: FiltersName) => {
@@ -32,12 +32,20 @@ const App: React.FC = () => {
     setPassword(generatedPassword || '');
   };
 
+  const handleCopyToClipboard = async () => {
+    try {
+      await copyTextToClipboard(password);
+    } catch (error: any) {
+      console.error(`Error copying text to clipboard: ${error.message}`);
+    }
+  };
+
   return (
     <Container handleSubmit={handleSubmit}>
       <section className="container-password">
         <span className="password">{password}</span>
         <span className="icon">
-          <FiClipboard size={18} />
+          <FiClipboard onClick={handleCopyToClipboard} size={18} />
         </span>
       </section>
       <section className="container-filters">
