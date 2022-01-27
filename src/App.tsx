@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { FiClipboard } from 'react-icons/fi';
-import { Container } from './components';
-import { Checkbox } from './components/Checkbox/Checkbox';
+import { Container, Checkbox } from './components';
 import { copyTextToClipboard } from './helpers/copyToClipboard';
 import { generatePassword } from './helpers/generatePassword';
 import { FiltersName, FiltersType } from './types';
