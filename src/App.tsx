@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FiClipboard } from 'react-icons/fi';
+import { Snackbar } from '@material-ui/core';
 import { Container, Checkbox } from './components';
 import { copyTextToClipboard } from './helpers/copyToClipboard';
 import { generatePassword } from './helpers/generatePassword';
@@ -16,6 +17,7 @@ const App: React.FC = () => {
     [FiltersName.numbers]: true,
     [FiltersName.symbols]: true
   });
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const handleCheckboxChange = (name: FiltersName) => {
     setFilters({ ...filters, [name]: !filters[name] });
@@ -34,6 +36,7 @@ const App: React.FC = () => {
   const handleCopyToClipboard = async () => {
     try {
       await copyTextToClipboard(password);
+      setShowSnackbar(true);
     } catch (error: any) {
       console.error(`Error copying text to clipboard: ${error.message}`);
     }
@@ -87,6 +90,12 @@ const App: React.FC = () => {
       <section className="action">
         <button>Gerar</button>
       </section>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={4000}
+        onClose={() => setShowSnackbar(false)}
+        message="Senha copiada para área de transferência!"
+      />
     </Container>
   );
 };
