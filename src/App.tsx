@@ -47,7 +47,11 @@ const App: React.FC = () => {
       <section className="container-password">
         <span className="password">{password}</span>
         <span className="icon">
-          <FiClipboard onClick={handleCopyToClipboard} size={18} />
+          <FiClipboard
+            className="icon-clipboard"
+            onClick={handleCopyToClipboard}
+            size={18}
+          />
         </span>
       </section>
       <section className="container-filters">

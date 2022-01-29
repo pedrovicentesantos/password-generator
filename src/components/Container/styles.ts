@@ -31,10 +31,15 @@ const StyledContainer = styled.form`
       justify-content: space-between;
       align-items: center;
     }
+
     .password {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .icon-clipboard:hover {
+      transform: scale(1.2);
     }
   }
 
