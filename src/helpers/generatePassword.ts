@@ -1,4 +1,5 @@
-import { FiltersType } from '../types';
+import { equals } from 'ramda';
+import { FiltersName, FiltersType } from '../types';
 
 const generateStringGroup = (min: number, max: number) => {
   let group = '';
@@ -27,6 +28,19 @@ const generatePassword = (length: number, filters: FiltersType) => {
   const symbolsGroup = ',.;!?:@#$%^~&()[]{}-_=+';
   let finalGroup = '';
   let password = '';
+  let valid = false;
+
+  const validate = (
+    letter: string,
+    filters: FiltersType,
+    currentFilters: FiltersType
+  ) => {
+    if (lowercaseGroup.includes(letter)) currentFilters.lowercase = true;
+    if (uppercaseGroup.includes(letter)) currentFilters.uppercase = true;
+    if (numbersGroup.includes(letter)) currentFilters.numbers = true;
+    if (symbolsGroup.includes(letter)) currentFilters.symbols = true;
+    return equals(filters, currentFilters);
+  };
 
   if (
     !filters.lowercase &&
@@ -41,9 +55,21 @@ const generatePassword = (length: number, filters: FiltersType) => {
   if (filters.numbers) finalGroup += numbersGroup;
   if (filters.symbols) finalGroup += symbolsGroup;
 
-  for (let i = 0; i < length; i++) {
-    const randomIndex = generateRandomNumber(0, finalGroup.length - 1);
-    password += finalGroup[randomIndex];
+  while (!valid) {
+    password = '';
+    const currentFilters = {
+      [FiltersName.lowercase]: false,
+      [FiltersName.uppercase]: false,
+      [FiltersName.numbers]: false,
+      [FiltersName.symbols]: false
+    };
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = generateRandomNumber(0, finalGroup.length - 1);
+      const letter = finalGroup[randomIndex];
+      password += letter;
+      valid = validate(letter, filters, currentFilters);
+    }
   }
 
   return password;
