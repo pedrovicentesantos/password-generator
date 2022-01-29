@@ -10,7 +10,7 @@ const defaultLength = 8;
 
 const App: React.FC = () => {
   const [password, setPassword] = useState('');
-  const [length, setLength] = useState(defaultLength);
+  const [length, setLength] = useState<number | string>(defaultLength);
   const [filters, setFilters] = useState<FiltersType>({
     [FiltersName.lowercase]: true,
     [FiltersName.uppercase]: true,
@@ -24,12 +24,12 @@ const App: React.FC = () => {
   };
 
   const handleChangeLength = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLength(parseInt(e.target.value));
+    setLength(parseInt(e.target.value, 10) || '');
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const generatedPassword = generatePassword(length, filters);
+    const generatedPassword = generatePassword(length as number, filters);
     setPassword(generatedPassword || '');
   };
 
