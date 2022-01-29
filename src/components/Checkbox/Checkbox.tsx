@@ -1,11 +1,11 @@
 import { FiCheckCircle, FiCircle } from 'react-icons/fi';
-import { filtersName } from '../../types';
+import { FiltersName } from '../../types';
 
 type CheckboxProps = {
-  name: filtersName;
+  name: FiltersName;
   label: string;
   checked: boolean;
-  handleChange: (name: filtersName) => void;
+  handleChange: (name: FiltersName) => void;
 };
 
 const Checkbox: React.FC<CheckboxProps> = ({
