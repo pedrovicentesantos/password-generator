@@ -68,7 +68,9 @@ const generatePassword = (length: number, filters: FiltersType) => {
       const randomIndex = generateRandomNumber(0, finalGroup.length - 1);
       const letter = finalGroup[randomIndex];
       password += letter;
-      valid = validate(letter, filters, currentFilters);
+      if (!valid) {
+        valid = validate(letter, filters, currentFilters);
+      }
     }
   }
 
